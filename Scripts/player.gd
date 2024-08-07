@@ -18,23 +18,20 @@ func _physics_process(delta):
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	#gets input direction, either 0,1,-1
+	# gets input direction, either 0,1,-1
 	var direction = Input.get_axis("move_left", "move_right")
 	if direction > 0:
 		a_sprite.flip_h = false
 	elif direction < 0:
 		a_sprite.flip_h = true
 		
-	#Play animations
+	# Play animations
 	if is_on_floor():
 		if direction == 0:
 			a_sprite.play("idle")
 		else:
 			a_sprite.play("run")
-	else:
-		a_sprite.play("jumping")
-		
-	#Applies movement
+	# Applies movement
 	if direction:
 		velocity.x = direction * SPEED
 	else:
@@ -45,3 +42,8 @@ func _physics_process(delta):
 # Function to set the jump velocity
 func set_jump_velocity(new_jump_velocity):
 	velocity.y = new_jump_velocity
+
+# Function to handle the player's death
+func die():
+	velocity = Vector2.ZERO # Stop player movement
+	a_sprite.play("die")
